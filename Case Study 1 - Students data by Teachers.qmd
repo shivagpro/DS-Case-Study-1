@@ -1,0 +1,242 @@
+---
+title: " ADSC 1910 Case Study 1 - Students data by Teachers"
+authors:
+- name: Shiva Prasad - T00756125
+- name: Varsha Tom - T00750156
+- name: Keerthi Gopalakrishnan - T00754181
+format: pdf
+editor: visual
+---
+
+## 1 Introduction
+
+### Problem Outline
+
+An elementary school in Kamloops conducted a random survey on grade 5 students to better get to know their students. The elementary school teachers prefer to have a professional second opinion on the quality and structure of the data they have collected.
+
+### Key Methodology Used
+
+The following methods were used to study the data:
+
+1.  **Descriptive Statistics:** To describe the basic features of the data
+
+2.  **Data Visualization:** To visually observe the patterns and trends and highlight outliers
+
+    -   Stem and leaf display for numeric data - To visualize the distribution of Math, Science and English scores
+
+    -   Histogram - To visualize the distribution of given subjects, with density to identify skewness
+
+    -   Bar plots - To visualize the frequency of favourite colours and classes
+
+    -   Box plots - To visualize the distribution of the given subjects and their scores with outlier identification
+
+3.  **Data Cleaning:** To ensure data is consistent
+
+### **Report Structure**
+
+1.  Introduction
+
+2.  Methods Used
+
+3.  Findings and Results
+
+4.  Conclusion
+
+5.  Recommendations
+
+## 2 Methods
+
+1.  **R Programming:** This tool was used to create vectors of the data, clean it and perform descriptive analysis on it
+
+2.  **R Visualization tools:** This tool was used to visualize the data that helped observe the patterns and trends and highlight the outliers in the data
+
+3.  **Quarto:** This tool was used to present the findings with the code and required text in an appealing format
+
+## 3 Findings and Results
+
+The findings and results of this analysis were explained from the basic concepts keeping in mind the audience of the conclusion were elementary school teachers.
+
+The required data was converted into vectors to insert into R.
+
+```{r}
+# Creating the required vectors
+student_names <- c("Amina", "Hiroshi","Leila","Mateo","Zainab","Rajesh",
+                   "Anaya","Omar","Xiang","Sofia","Alejandro","Nia",
+                   "Amir","Yara","Kofi")
+math_score <- c(88,77,55,63,95,68,75,71,86,59,98,23,85,91,87)
+science_score <- c(78,75,68,82,85,71,88,62,76,83,79,68,72,82,77)
+english_score <- c(75,64,47,85,98,55,79,65,55,58,89,35,67,95,82)
+fav_colour <- c("red","green","blue","NIL","blue","red","blue","NIL"
+               ,"green","green","orange","blue","NIL","NIL","red")
+fav_class <- c("math","science","gym","gym","english","science",
+               "science","math","math","science","english","gym",
+               "science","english","math")
+```
+
+**Table:**
+
+The table function was used to find the mode in the qualitative data
+
+```{r}
+# Using the table function 
+table(fav_colour) 
+table(fav_class)
+```
+
+The mode in fav_colour shows that the observation NIL will have a very high impact on the results of the analysis and it does not contribute to the overall inference from the data.
+
+So, the NIL observations are dropped from the fav_colour vector and the remaining data is stored in a new vector fav_colour_new.
+
+```{r}
+fav_colour_new <- fav_colour[fav_colour != "NIL"]
+table(fav_colour_new)
+```
+
+Now, there are no NIL observations in the fav_colour_new vector and it can be used for analysis.
+
+\newpage
+
+**Stem and Leaf Display:**
+
+Stem and leaf displays of math_score, science_score and english_score were created to display the main features of the distribution and help identify outliers in the data.
+
+```{r}
+# Stem and leaf display of quantitative data
+stem(math_score,scale=2)
+```
+
+The stem and leaf display of math_score showed an outlier (23) in the vector. Most observations of the vector math_score were in the 80s range.
+
+```{r}
+stem(science_score,scale=2)
+```
+
+The stem and leaf display of science_score showed that most observations were in the 70s range.
+
+\newpage
+
+```{r}
+stem(english_score,scale=2)
+```
+
+The stem and leaf display of english_score showed that most observations were in the 60s,70s and 80s range.
+
+\newpage
+
+**Histogram:**
+
+Creating the histograms of math_score, science_score and english_score along with their densities to summarize discrete or continuous data measured on an interval scale.
+
+```{r}
+# Histogram of quantitative data
+hist(math_score,prob=TRUE,xlab = "Math Scores", 
+     main = "Histogram of Math scores")
+lines(density(math_score),col="red")
+```
+
+The histogram of math_score shows a negative skew which shows that most observations in the dataset are in the higher end of the spectrum.
+
+\newpage
+
+```{r}
+hist(science_score,prob=TRUE,xlab = "Science Scores", 
+     main = "Histogram of Science scores")
+lines(density(science_score),col="red")
+```
+
+The histogram of science_score shows a slightly negative skew which shows that most observations in the dataset are in the higher end of the spectrum.
+
+\newpage
+
+```{r}
+hist(english_score,prob=TRUE,xlab = "English Scores", 
+     main = "Histogram of English Scores")
+lines(density(english_score),col="red")
+```
+
+A bimodal histogram was observed in the english_score vector which shows that there are 2 significant modes in the vector.
+
+\newpage
+
+**Barplot:**
+
+Creating a barplot of fav_colour_new and fav_class to show the relationship between a numeric and a categoric variable.
+
+```{r}
+# Barplot of qualitative data
+barplot(table(fav_colour_new),xlab = "Favorite colour of students",
+        ylab = "Frequency",main = "Barplot of favorite colours of students")
+```
+
+Blue is the favourite colour among students with a frequency of 4.
+
+Green and Red are the second favourites at a frequency of 3 and Orange is the colour with the least frequency at 1.
+
+\newpage
+
+```{r}
+barplot(table(fav_class),xlab = "Favorite class of students",
+        ylab = "Frequency",main = "Barplot of favorite class of students")
+```
+
+Science is the favorite class of the students with a frequency of 5 followed by math at a frequency of 4.
+
+English and Gym are next which have the same frequency of 3.
+
+\newpage
+
+**Boxplot:**
+
+Creating the boxplots of math_score, science_score and english_score to show distributions of numeric data values between multiple groups and can also point out if there is any outlier in the data.
+
+```{r}
+# Boxplot of quantitative data
+boxplot(math_score, ylab = "Math score", 
+        main = "Boxplot of Math Score")
+```
+
+The boxplot of math_score shows a median of just under 80. There is an outlier in the lower end of the spectrum.
+
+\newpage
+
+```{r}
+boxplot(science_score, scale = 2, ylab = "Science score", 
+        main = "Boxplot of Science Score")
+```
+
+The boxplot of science_score shows a median of around 76.
+
+\newpage
+
+```{r}
+boxplot(english_score, scale = 2, ylab = "English score", 
+        main = "Boxplot of English Score")
+```
+
+The boxplot of english_score shows a median of around 76 and the data is slightly skewed in the positive side.
+
+\newpage
+
+## 4 Discussion / Conclusion
+
+There were missing values in the raw data in the Favourite Colours column. This led to it being low-quality data.
+
+An outlier was found in the Math Scores column which skewed the result.
+
+Math Scores and Science Scores had a negative skew.
+
+English Scores had two significant modes.
+
+Blue was the favourite colour among the students.
+
+Science was the favourite class among the students.
+
+Although some inferences could be made about the students from the data, it cannot be used to represent a large population from this sample. This is mainly because of the absence of some values in the dataset. Another reason is the presence of a few outliers in the data. These two factors hinder us from using this sample data to represent a large population of students.
+
+Nevertheless, since the study’s objective is to learn about the 15 students in the given data, the dataset is pretty good to know about the students.
+
+## 5 Recommendations
+
+While collecting data, make sure not to miss any of the observations as this may hinder the quality of the data.
+
+The quality of the data for analysis decides the relevance of the results from the study of the analyzed data.
