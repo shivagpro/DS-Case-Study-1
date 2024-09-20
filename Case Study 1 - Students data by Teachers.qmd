@@ -240,3 +240,5 @@ Nevertheless, since the study’s objective is to learn about the 15 students in
 While collecting data, make sure not to miss any of the observations as this may hinder the quality of the data.
 
 The quality of the data for analysis decides the relevance of the results from the study of the analyzed data.
+
+change 1
